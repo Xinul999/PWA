@@ -1,0 +1,9 @@
+.sidebar{
+    grid-area: sidebar;
+    overflow-y: scroll;
+}
+
+.side-menu-tab{
+    display: flex;
+    justify-content: space-between;
+}

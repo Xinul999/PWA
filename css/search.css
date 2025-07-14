@@ -1,0 +1,35 @@
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+}
+
+.flex-loupe-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 100%;
+    gap: 1rem;
+    border: 1px solid rgba(0,0,0,0.05);
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+.loupe{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url("../img/loupe.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+#search-bar{
+    border: none;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    width: 100%;
+    caret-color: #43346CFF;
+    color: #43346CFF;
+    font-weight: bold;
+}

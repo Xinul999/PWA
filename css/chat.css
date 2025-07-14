@@ -1,0 +1,4 @@
+.chat-menu{
+    grid-area: chat-menu;
+    overflow-y: scroll;
+}
