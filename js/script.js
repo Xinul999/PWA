@@ -2,7 +2,7 @@
 const storeEvent = new Map();
 document.addEventListener('DOMContentLoaded', () => {
     const btnCourse = boutonCourse();
-    const btnAmis = boutonAmis()
+    const btnAmis = boutonAmis();
     const course = document.querySelector('[data-id="cours"]');
     const amis = document.querySelector('[data-id="amis"]');
     const coursesList = allCourses();
@@ -72,9 +72,9 @@ const createEditableLesson = () => {
     return lesson;
 };
 
-const boutonCourse = () =>  document.querySelector('[data-id="cours"]');
+const boutonCourse = () =>  document.querySelector('#cours');
 
-const boutonAmis = () => document.querySelector('[data-id="amis"]');
+const boutonAmis = () => document.querySelector('#amis');
 
 const allCourses = () => Array.from(document.querySelectorAll('[data-id="cours-item"]'));
 
