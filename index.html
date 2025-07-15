@@ -44,12 +44,49 @@
                 </div>
             </form>
             <div class="side-menu-tab">
-                <button class="side-tab-btn">Cours</button>
-                <button class="side-tab-btn">Amis</button>
+                <button class="side-tab-btn active" id="cours">Cours</button>
+                <button class="side-tab-btn" id="amis">Amis</button>
+            </div>
+            <div class="side-menu-cours active" data-id="cours">
+                <div class="cours-item" data-id="cours-item">
+                    <div>
+                        <h2>Cours de PHP</h2>
+                        <p>Marie: Salut tout le monde!</p>
+                    </div>
+                </div>
+                <div class="cours-item" data-id="cours-item">
+                    <div>
+                        <h2>Cours de A-Frame</h2>
+                        <p>Aaron: Impossible de mettre un colider :(</p>
+                    </div>
+
+                </div>
+                <div class="cours-item" data-id="cours-item">
+                    <div>
+                        <h2>Cours de CMS</h2>
+                        <p>Victor: WordPress ne s'installe</p>
+                    </div>
+                </div>
+            </div>
+            <div class="side-menu-amis" data-id="amis">
+                <div class="ami-item">
+                    <h2>John Doe</h2>
+                    <p>Disponible depuis le 1er janvier 2023</p>
+                </div>
+                <div class="ami-item">
+                    <h2>Jane Smith</h2>
+                    <p>Disponible depuis le 1er février 2023</p>
+                </div>
+                <div class="ami-item">
+                    <h2>Emily Davis</h2>
+                    <p>Disponible depuis le 1er mars 2023</p>
+                </div>
             </div>
         </aside>
         <main class="chat-menu"></main>
     </div>
-<script src="main.js"></script>
+    <!--script src="js/main.js"></script -->
+    <!-- <script src="js/sw.js"></script> -->
+    <script src="js/script.js"></script>
 </body>
 </html>

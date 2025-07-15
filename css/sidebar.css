@@ -7,3 +7,60 @@
     display: flex;
     justify-content: space-between;
 }
+.side-tab-btn{
+    appearance: none;
+    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    flex: 1;
+    border: 1px solid rgba(0 0 0 / 0.05);
+}
+
+.side-tab-btn:hover{
+    color: #6f62c1;
+    border: 1px solid rgba(0 0 0 / 0.05);
+    background-color: rgba(200 200 200 / 0.5);
+}
+
+
+.side-tab-btn.active{
+    color: #6f62c1;
+    border: 1px solid rgba(0 0 0 / 0.05);
+    background-color: rgba(200 200 200 / 0.5);
+}
+
+.side-menu-cours, .side-menu-amis{
+    display: none;
+}
+
+.side-menu-cours.active, .side-menu-amis.active{
+    display: block;
+}
+
+h2{
+    font-size: 1.2rem;
+}
+
+.cours-item{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.70rem;
+    cursor: pointer;
+}
+.cours-item.active{
+    background-image: linear-gradient(to right top, #828ae9, #7f7bd9, #7d6cc8, #795db7, #754ea6);
+    color: white;
+}
+.cours-item::before{
+     content: "";
+     display: inline-block;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     background:
+             linear-gradient(to right top, #667eea, #6a77e0, #6c70d5, #6e69cb, #6f62c1),
+             url("../img/computer.svg");
+     background-size: contain;
+     background-blend-mode: overlay;
+}

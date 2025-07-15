@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+    <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea"/>
+            <stop offset="25%" style="stop-color:#6a77e0"/>
+            <stop offset="50%" style="stop-color:#6c70d5"/>
+            <stop offset="75%" style="stop-color:#6e69cb"/>
+            <stop offset="100%" style="stop-color:#6f62c1"/>
+        </linearGradient>
+        <linearGradient id="screenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#c2c9fd"/>
+            <stop offset="100%" style="stop-color:#e8ebff"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Écran principal -->
+    <rect x="8" y="10" width="44" height="28" rx="2" fill="url(#gradient)" stroke="#5a4fcf" stroke-width="1"/>
+
+    <!-- Écran intérieur -->
+    <rect x="11" y="13" width="38" height="22" rx="1" fill="url(#screenGradient)"/>
+
+    <!-- Pied de l'écran -->
+    <rect x="26" y="38" width="8" height="6" fill="url(#gradient)"/>
+
+    <!-- Base -->
+    <ellipse cx="30" cy="46" rx="12" ry="2" fill="url(#gradient)" opacity="0.8"/>
+
+    <!-- Détails écran -->
+    <circle cx="30" cy="41" r="1.5" fill="#5a4fcf" opacity="0.6"/>
+
+    <!-- Reflet sur l'écran -->
+    <rect x="13" y="15" width="15" height="8" rx="1" fill="white" opacity="0.2"/>
+</svg>
