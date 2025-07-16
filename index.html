@@ -35,7 +35,22 @@
             </div>
             <p class="text-color-primary">Échangeaons ensemble</p>
         </header>
-        <header class="header-right"></header>
+        <header class="header-right">
+            <div class="chat-avatar"></div>
+            <header class="header-right">
+                <div class="chat-head">
+                    <div class="chat-meta">
+                    <h2 id="chat-header">Sélectionne un cours</h2>
+                    <p id="online-count">0 membres en ligne</p>
+                    </div>
+                    <div class="chat-actions">
+                    <button class="chat-btn" title="Demander de l'aide">❔</button>
+                    <button class="chat-btn" title="Joindre un fichier">📎</button>
+                    <button class="chat-btn" title="Appel vidéo">📹</button>
+                    </div>
+                </div>
+        </header>
+        </header>
         <aside class="sidebar">
             <form>
                 <div class="flex-loupe-container">
@@ -95,10 +110,25 @@
                 <button class="btn-add" data-id="add">Ajouter</button>
             </div>
         </aside>
-        <main class="chat-menu"></main>
+        <main class="chat-menu">
+            <div class="chat-area">
+                <div class="messages" id="messages">
+                   <!--Les messages seront chargés ici -->
+                </div>
+            </div>
+            <footer class="chat-footer">
+            <div class="chat-input">
+                <button class="attach-btn">📎</button>
+                <input type="text" id="msgInput" placeholder="Tapez votre message...">
+                <button onclick="sendMessage()" class="send-btn">➤</button>
+            </div>
+        </footer>
+        </main>
+        
     </div>
     <!--script src="js/main.js"></script -->
     <!-- <script src="js/sw.js"></script> -->
     <script src="js/script.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>
