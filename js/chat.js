@@ -23,7 +23,7 @@ function loadMessages(courseName) {
         container.appendChild(div);
     });
 }
-/*envoi du message*/
+/*envoi du message TODO harmoniser avec le UserProfile */
 function sendMessage() {
     const input = document.getElementById("msgInput");
     const msg = input.value.trim();

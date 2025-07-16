@@ -82,12 +82,11 @@ const UserProfile = {
 const storeEvent = new Map();
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
-
-
 });
 
 const initializeApp = () => {
     listener(boutonCourse(), boutonAmis(), boutonAdd());
+    searchData();
     let user = UserProfile.getUserProfile();
     if(user === undefined) {
         const id = gernerarId()
@@ -147,6 +146,23 @@ const createEditableLesson = () => {
 };
 
 
+const searchData = () => {
+    const searchInput = document.querySelector('#search-bar');
+    const coursesList = document.querySelectorAll('[data-id="cours"]');
+
+    searchInput.addEventListener('input', (event) => {
+        const searchValue = searchInput.value.toLowerCase();
+        coursesList.forEach((course) => {
+            const title = course.querySelector('h2').textContent.toLowerCase();
+            const description = course.querySelector('p').textContent.toLowerCase();
+            if(title.includes(searchValue) || description.includes(searchValue)) {
+                course.style.display = 'block';
+            } else {
+                course.style.display = 'none';
+            }
+        });
+    })
+};
 
 const boutonCourse = () =>  document.querySelector('#cours');
 
@@ -240,3 +256,4 @@ const listener = (btnCourse, btnAmis, btnAdd) => {
         }
     })
 }
+

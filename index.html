@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PWA</title>
+    <!--link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous"-->
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/sidebar.css" rel="stylesheet">
@@ -13,7 +14,6 @@
     <link href="css/chat.css" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
-    <!--script src="https://cdn.jsdelivr.net/npm/fake@0.2.2/index.min.js"></script-->
 </head>
 <body>
     <div class="container">
@@ -35,29 +35,73 @@
             </div>
             <p class="text-color-primary">Échangeaons ensemble</p>
         </header>
-        <header class="header-right"></header>
+        <header class="header-right">
+            <div class="chat-avatar"></div>
+            <header class="header-right">
+                <div class="chat-head">
+                    <div class="chat-meta">
+                    <h2 id="chat-header">Sélectionne un cours</h2>
+                    <p id="online-count">0 membres en ligne</p>
+                    </div>
+                    <div class="chat-actions">
+                    <button class="chat-btn" title="Demander de l'aide">❔</button>
+                    <button class="chat-btn" title="Joindre un fichier">📎</button>
+                    <button class="chat-btn" title="Appel vidéo">📹</button>
+                    </div>
+                </div>
+        </header>
+        </header>
         <aside class="sidebar">
             <form>
                 <div class="flex-loupe-container">
                     <label for="search-bar" class="loupe"></label>
-                    <input type="text" id="search-bar" placeholder="Rechercher cours">
+                    <input type="text" id="search-bar" placeholder="Rechercher cours ou ami...">
                 </div>
             </form>
             <div class="side-menu-tab">
                 <button class="side-tab-btn active" id="cours">Cours</button>
                 <button class="side-tab-btn" id="amis">Amis</button>
             </div>
-            <div class="side-menu-cours active" data-id="cours"></div>
+            <div class="side-menu-cours active" data-id="cours">
+                <div class="cours-item" data-id="cours-item">
+                    <div>
+                        <h2>Cours de PHP</h2>
+                        <p>Salut tout le monde!</p>
+                    </div>
+                    <div class="top-right">
+                        <button class="btn-delete"></button>
+                    </div>
+
+                </div>
+                <div class="cours-item" data-id="cours-item">
+                    <div>
+                        <h2>Cours de A-Frame</h2>
+                        <p>Impossible de mettre un colider :(</p>
+                    </div>
+                    <div class="top-right">
+                        <button class="btn-delete"></button>
+                    </div>
+                </div>
+                <div class="cours-item" data-id="cours-item">
+                    <div>
+                        <h2>Cours de CMS</h2>
+                        <p>WordPress ne s'installe</p>
+                    </div>
+                    <div class="top-right">
+                        <button class="btn-delete"></button>
+                    </div>
+                </div>
+            </div>
             <div class="side-menu-amis" data-id="amis">
-                <div class="amis-item">
+                <div class="ami-item">
                     <h2>John Doe</h2>
                     <p>Disponible depuis le 1er janvier 2023</p>
                 </div>
-                <div class="amis-item">
+                <div class="ami-item">
                     <h2>Jane Smith</h2>
                     <p>Disponible depuis le 1er février 2023</p>
                 </div>
-                <div class="amis-item">
+                <div class="ami-item">
                     <h2>Emily Davis</h2>
                     <p>Disponible depuis le 1er mars 2023</p>
                 </div>
@@ -66,10 +110,27 @@
                 <button class="btn-add" data-id="add">Ajouter</button>
             </div>
         </aside>
-        <main class="chat-menu"></main>
+        <main class="chat-menu">
+            <div class="chat-area">
+                <div class="messages" id="messages">
+                   <!--Les messages seront chargés ici -->
+                </div>
+            </div>
+            <footer class="chat-footer">
+            <div class="chat-input">
+                <button class="attach-btn">📎</button>
+                <label for="msgInput" class="attach-icon">
+                    <input type="text" id="msgInput" placeholder="Tapez votre message...">
+                </label>
+                <button onclick="sendMessage()" class="send-btn">➤</button>
+            </div>
+        </footer>
+        </main>
+
     </div>
     <!--script src="js/main.js"></script -->
     <!-- <script src="js/sw.js"></script> -->
     <script src="js/script.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>
