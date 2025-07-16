@@ -1,6 +1,7 @@
 .sidebar{
     grid-area: sidebar;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
+    padding-inline: 0.55rem;
 }
 
 .side-menu-tab{
@@ -64,4 +65,12 @@ h2{
              url("../img/computer.svg");
      background-size: contain;
      background-blend-mode: overlay;
+}
+
+/* TODO voir pour le scroll !!!*/
+.scroll-sidebar{
+    height: 250px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-color: #000000 rgba(0 0 0 / 0.05);
 }
