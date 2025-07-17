@@ -356,7 +356,7 @@ const listener = (btnCourse, btnAmis, btnAdd) => {
                 parentNode.appendChild(newFriend);
             }
         }else{
-            alert('Veuillez d\'abord selectionner un cours ou un ami.');
+            alert('Veuillez selectionner un cours ou un ami.');
         }
     })
 }
@@ -484,8 +484,8 @@ const sendMessage = () => {
     const msg = input.value.trim();
     if (!msg) return;
 
-    const courseName = document.querySelector('[data-id="cours-item"]')
-    const isCourse = document.getElementById("cours").classList.contains("active") && courseName.classList.contains("active");
+    const courseName = document.querySelector('[data-id="cours-item"].active');
+    const isCourse = document.getElementById("cours").classList.contains("active") && courseName && courseName.classList.contains("active");
     if (!isCourse) return;
 
     // Affiche visuellement
