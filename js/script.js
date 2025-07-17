@@ -61,7 +61,7 @@ const UserProfile = {
             id: id,
             titre: titre,
             contenu: contenu,
-            date: date,
+            date: date
         });
         const userProfile = StorageData.loadFromStorage(UserProfile.USER_KEY.USER);
         userProfile.courses = courses;
@@ -98,13 +98,14 @@ const UserProfile = {
         userProfile.friends = friends;
         StorageData.saveToStorage(UserProfile.USER_KEY.USER, userProfile);
     },
-    addChatHistory: (idChat,idCourse, message, date) => {
+    addChatHistory: (idChat, idCourse, message, date, side) => {
         const chatHistory = [...UserProfile.getChatHistory()];
         chatHistory.push({
             id: idChat,
             idCourse: idCourse,
             message: message,
-            date: date
+            date: date,
+            side: side
         });
         const userProfile = StorageData.loadFromStorage(UserProfile.USER_KEY.USER);
         userProfile.chatHistory = chatHistory;
@@ -398,6 +399,7 @@ const displayCourses = () => {
             
             // Mettre à jour le chat header
             updateChatHeader(courseElement);
+            loadMessages(courseElement)
         };
 
         // Stocker et ajouter le listener
@@ -448,7 +450,8 @@ const displayFriends = () => {
 const updateChatHeader = (course) => {
     const courseName = document.getElementById('chat-header');
     if(course === undefined){
-        courseName.textContent = 'Cours inconnu';
+        courseName.textContent = 'Selection un cours';
+        document.getElementById('messages').innerHTML = '';
         return;
     }
     if(document.querySelector('[data-id="cours"]').classList.contains('active')){
@@ -462,17 +465,16 @@ const updateChatHeader = (course) => {
 
 /*chargement du chat*/
 const loadMessages = (courseName) => {
-
     const container = document.getElementById('messages');
-    container.innerHTML = ''; // Vide l'affichage
+    container.innerHTML = '';
 
     const stored = courseName.id;
-    const messages = UserProfile.getChatHistory().filter(chatHistory => chatHistory.id === stored);
+    const messages = UserProfile.getChatHistory().filter(chatHistory => chatHistory.idCourse === stored);
 
     messages.forEach(msg => {
         const div = document.createElement('div');
         div.className = msg.side === 'right' ? 'message sent' : 'message';
-        div.textContent = msg.text;
+        div.textContent = msg.message;
         container.appendChild(div);
     });
 }
@@ -482,8 +484,9 @@ const sendMessage = () => {
     const msg = input.value.trim();
     if (!msg) return;
 
-    const courseName = localStorage.getItem('currentCourse');
-    if (!courseName) return;
+    const courseName = document.querySelector('[data-id="cours-item"]')
+    const isCourse = document.getElementById("cours").classList.contains("active") && courseName.classList.contains("active");
+    if (!isCourse) return;
 
     // Affiche visuellement
     const div = document.createElement('div');
@@ -492,10 +495,8 @@ const sendMessage = () => {
     document.getElementById('messages').appendChild(div);
 
     // Stocke dans localStorage
-    const stored = localStorage.getItem(`chat-${courseName}`);
-    const messages = stored ? JSON.parse(stored) : [];
-    messages.push({ text: msg, side: 'right' });
-    localStorage.setItem(`chat-${courseName}`, JSON.stringify(messages));
-
+    const date = new Date().toISOString();
+    UserProfile.addChatHistory(gernerarId(), courseName.id, msg, date,'right');
     input.value = '';
+    loadMessages(courseName);
 }

@@ -35,6 +35,7 @@
 .message.sent {
   background: #d1e7ff;
   align-self: flex-end;
+  margin-right: 4px;
 }
 
 .chat-footer {
@@ -72,6 +73,13 @@
   display: flex;
   justify-content: space-between;
   flex-basis: 100%;
+}
+.attach-icon{
+  display: flex;
+  flex-basis: 100%;
+}
+#msgInput{
+  flex: 1;
 }
 .send-btn {
   color: white;
