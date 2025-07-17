@@ -82,7 +82,7 @@ body{
     right: 3px;
     display: none;
 }
-.cours-item:hover .top-right{
+.cours-item:hover .top-right, .amis-item:hover .top-right{
     display: block;
 }
 .btn-delete{

@@ -42,7 +42,7 @@ h2{
     font-size: 1.2rem;
 }
 
-.cours-item{
+.cours-item, .amis-item{
     position: relative;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@ h2{
     padding: 0.70rem;
     cursor: pointer;
 }
-.cours-item.active{
+.cours-item.active, .amis-item.active{
     background-image: linear-gradient(to right top, #828ae9, #7f7bd9, #7d6cc8, #795db7, #754ea6);
     color: white;
 }

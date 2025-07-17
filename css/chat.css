@@ -68,7 +68,11 @@
   cursor: pointer;
   margin: 0 8px;
 }
-
+.chat-container{
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 100%;
+}
 .send-btn {
   color: white;
   background: linear-gradient(to right, #7c3aed, #6366f1);
