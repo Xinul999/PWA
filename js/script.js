@@ -399,7 +399,16 @@ const displayCourses = () => {
             
             // Mettre à jour le chat header
             updateChatHeader(courseElement);
-            loadMessages(courseElement)
+            loadMessages(courseElement);
+
+           // Responsive : activer affichage du chat et masquer la sidebar en mobile
+            if (window.innerWidth <= 768) {
+            const container = document.querySelector('.container');
+            if (container && !container.classList.contains('mobile-chat-active')) {
+                container.classList.add('mobile-chat-active');
+            }
+            }
+
         };
 
         // Stocker et ajouter le listener
@@ -465,19 +474,24 @@ const updateChatHeader = (course) => {
 
 /*chargement du chat*/
 const loadMessages = (courseName) => {
-    const container = document.getElementById('messages');
-    container.innerHTML = '';
+  const container = document.getElementById('messages');
+  container.innerHTML = '';
 
-    const stored = courseName.id;
-    const messages = UserProfile.getChatHistory().filter(chatHistory => chatHistory.idCourse === stored);
+  const stored = courseName.id;
 
-    messages.forEach(msg => {
-        const div = document.createElement('div');
-        div.className = msg.side === 'right' ? 'message sent' : 'message';
-        div.textContent = msg.message;
-        container.appendChild(div);
-    });
-}
+  // 🔒 Sécurisation : si getChatHistory() renvoie undefined, on prend un tableau vide
+  const allHistory = UserProfile.getChatHistory() || [];
+
+  const messages = allHistory.filter(chatHistory => chatHistory.idCourse === stored);
+
+  messages.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = msg.side === 'right' ? 'message sent' : 'message';
+    div.textContent = msg.message;
+    container.appendChild(div);
+  });
+};
+
 
 const sendMessage = () => {
     const input = document.getElementById("msgInput");
@@ -500,3 +514,15 @@ const sendMessage = () => {
     input.value = '';
     loadMessages(courseName);
 }
+const headerLeft = document.querySelector('.header-left');
+
+if (headerLeft) {
+  headerLeft.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      document.querySelector('.container')?.classList.remove('mobile-chat-active');
+    }
+  });
+}
+
+
+

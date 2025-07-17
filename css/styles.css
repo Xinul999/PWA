@@ -1,3 +1,9 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 :root{
     --sidebar-size: 350px;
 }
@@ -12,7 +18,6 @@
 body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
-    padding: 1rem;
     background-image: linear-gradient(to right top, #667eea, #6a77e0, #6c70d5, #6e69cb, #6f62c1);
 }
 .container{
@@ -24,7 +29,8 @@ body{
             "header-left header-right"
             "sidebar chat-menu";
     grid-template-columns: minmax(var(--sidebar-size), 500px) 1fr;
-    grid-template-rows: 80px minmax(400px, 1fr);
+    height: 95vh;
+    grid-template-rows: 80px 1fr;
     background-color: white;
     border-radius: 1rem;
 
@@ -118,4 +124,45 @@ body{
     height: 3px;
     background-color: white;
     transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+/*responsive*/
+@media (max-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .header-right {
+    display: none;
+  }
+
+  .chat-head,
+  #messages,
+  .chat-footer,
+  .chat-menu {
+    display: none;
+  }
+
+  .sidebar {
+    display: block;
+  }
+
+  .container.mobile-chat-active .sidebar {
+    display: none;
+  }
+
+  .container.mobile-chat-active .header-right,
+  .container.mobile-chat-active #messages,
+  .container.mobile-chat-active .chat-footer,
+  .container.mobile-chat-active .chat-menu {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-left {
+    cursor: pointer;
+  }
 }
