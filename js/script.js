@@ -428,6 +428,18 @@ const displayFriends = () => {
             friendElement.remove();
         });
 
+        const combinedClickHandlerFriends = () => {
+            const filtre = allFriends().filter((item) => item !== friendElement && item.classList.contains('active'));
+            filtre.forEach((course) => course.classList.remove('active'));
+            friendElement.classList.toggle('active');
+
+            // Mettre à jour le chat header
+            updateChatHeader(friendElement);
+        };
+
+        // Stocker et ajouter le listener
+        storeEvent.set(friendElement, combinedClickHandlerFriends);
+        friendElement.addEventListener('click', combinedClickHandlerFriends);
         document.querySelector('[data-id="amis"]').appendChild(friendElement);
     });
 }
@@ -455,7 +467,7 @@ const loadMessages = (courseName) => {
     container.innerHTML = ''; // Vide l'affichage
 
     const stored = courseName.id;
-    const messages = UserProfile.getChatHistory().chatHistory.filter(chatHistory => chatHistory.id === stored);
+    const messages = UserProfile.getChatHistory().filter(chatHistory => chatHistory.id === stored);
 
     messages.forEach(msg => {
         const div = document.createElement('div');
