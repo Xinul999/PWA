@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="StudyConnect - Plateforme d'échange et de collaboration pour étudiants. Partagez vos cours, connectez-vous avec vos amis et étudiez ensemble en ligne.">
     <title>StudyConnect - Échangeons ensemble</title>
@@ -13,6 +12,31 @@
     <link href="css/search.css?v=1.0.0" rel="stylesheet">
     <link href="css/chat.css?v=1.0.0" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
+    <!-- SEO -->
+    <meta name="description" content="StudyConnect - Plateforme d'échange et de collaboration pour étudiants. Partagez vos cours, connectez-vous avec vos amis et étudiez ensemble en ligne.">
+    <meta name="keywords" content="étudiant, cours, collaboration, chat, étude, éducation, PWA">
+    <meta name="author" content="StudyConnect">
+
+
+    <meta property="og:title" content="StudyConnect - Échangeons ensemble">
+    <meta property="og:description" content="Plateforme d'échange et de collaboration pour étudiants">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://votre-domaine.com">
+    <meta property="og:image" content="img/apple-touch-icon.png">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="StudyConnect - Échangeons ensemble">
+    <meta name="twitter:description" content="Plateforme d'échange et de collaboration pour étudiants">
+    <meta name="twitter:image" content="img/apple-touch-icon.png">
+
+    <title>StudyConnect - Échangeons ensemble</title>
+    <!-- CSS avec versioning pour forcer la mise à jour -->
+    <link href="css/styles.css?v=1.0.0" rel="stylesheet">
+    <link href="css/header.css?v=1.0.0" rel="stylesheet">
+    <link href="css/sidebar.css?v=1.0.0" rel="stylesheet">
+    <link href="css/search.css?v=1.0.0" rel="stylesheet">
+    <link href="css/chat.css?v=1.0.0" rel="stylesheet">
+    <link rel="manifest" href="manifest.json?v=1.0.0">
     <meta name="theme-color" content="#000000">
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
@@ -20,63 +44,63 @@
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 </head>
 <body>
-    <div class="container">
-        <header class="header-left">
-            <div class="information-title">
-                <svg class="book-icon" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Livre vert -->
-                    <rect x="2" y="1" width="10" height="16" rx="1" fill="#22c55e" stroke="#16a34a" stroke-width="0.5"/>
-                    <!-- Livre rouge  -->
-                    <rect x="8" y="3" width="10" height="16" rx="1" fill="#ef4444" stroke="#dc2626" stroke-width="0.5"/>
-                    <!-- Livre bleu  -->
-                    <rect x="14" y="5" width="10" height="16" rx="1" fill="#3b82f6" stroke="#2563eb" stroke-width="0.5"/>
-                    <!-- Détails des reliures -->
-                    <line x1="3" y1="2" x2="3" y2="16" stroke="black" stroke-width="0.5"/>
-                    <line x1="9" y1="4" x2="9" y2="18" stroke="black" stroke-width="0.5"/>
-                    <line x1="15" y1="6" x2="15" y2="20" stroke="black" stroke-width="0.5"/>
-                </svg>
-                <h1 class="text-color-primary">StudyConnect</h1>
+<div class="container">
+    <header class="header-left">
+        <div class="information-title">
+            <svg class="book-icon" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
+                <!-- Livre vert -->
+                <rect x="2" y="1" width="10" height="16" rx="1" fill="#22c55e" stroke="#16a34a" stroke-width="0.5"/>
+                <!-- Livre rouge  -->
+                <rect x="8" y="3" width="10" height="16" rx="1" fill="#ef4444" stroke="#dc2626" stroke-width="0.5"/>
+                <!-- Livre bleu  -->
+                <rect x="14" y="5" width="10" height="16" rx="1" fill="#3b82f6" stroke="#2563eb" stroke-width="0.5"/>
+                <!-- Détails des reliures -->
+                <line x1="3" y1="2" x2="3" y2="16" stroke="black" stroke-width="0.5"/>
+                <line x1="9" y1="4" x2="9" y2="18" stroke="black" stroke-width="0.5"/>
+                <line x1="15" y1="6" x2="15" y2="20" stroke="black" stroke-width="0.5"/>
+            </svg>
+            <h1 class="text-color-primary">StudyConnect</h1>
+        </div>
+        <p class="text-color-primary">Échangeons ensemble</p>
+    </header>
+    <header class="header-right">
+        <div class="chat-avatar">
+            <div class="chat-meta">
+                <h2 id="chat-header">Sélectionne un cours</h2>
+                <p id="online-count">0 membres en ligne</p>
+                <p id="user-connect"></p>
             </div>
-            <p class="text-color-primary">Échangeons ensemble</p>
-        </header>
-        <header class="header-right">
-            <div class="chat-avatar">
-                <div class="chat-meta">
-                    <h2 id="chat-header">Sélectionne un cours</h2>
-                    <p id="online-count">0 membres en ligne</p>
-                    <p id="user-connect"></p>
-                </div>
-                <div class="chat-actions">
-                    <button class="chat-btn" title="Demander de l'aide">❔</button>
-                    <button class="chat-btn" title="Joindre un fichier">📎</button>
-                    <button class="chat-btn" title="Appel vidéo">📹</button>
-                </div>
+            <div class="chat-actions">
+                <button class="chat-btn" title="Demander de l'aide">❔</button>
+                <button class="chat-btn" title="Joindre un fichier">📎</button>
+                <button class="chat-btn" title="Appel vidéo">📹</button>
             </div>
-        </header>
-        <aside class="sidebar">
-            <form>
-                <div class="flex-loupe-container">
-                    <label for="search-bar" class="loupe"></label>
-                    <input type="text" id="search-bar" placeholder="Rechercher cours">
-                </div>
-            </form>
-            <div class="side-menu-tab">
-                <button class="side-tab-btn active" id="cours">Cours</button>
-                <button class="side-tab-btn" id="amis">Amis</button>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <form>
+            <div class="flex-loupe-container">
+                <label for="search-bar" class="loupe"></label>
+                <input type="text" id="search-bar" placeholder="Rechercher cours">
             </div>
-            <div class="side-menu-cours active" data-id="cours"></div>
-            <div class="side-menu-amis" data-id="amis"></div>
-            <div class="btn">
-                <button class="btn-add" data-id="add">Ajouter</button>
+        </form>
+        <div class="side-menu-tab">
+            <button class="side-tab-btn active" id="cours">Cours</button>
+            <button class="side-tab-btn" id="amis">Amis</button>
+        </div>
+        <div class="side-menu-cours active" data-id="cours"></div>
+        <div class="side-menu-amis" data-id="amis"></div>
+        <div class="btn">
+            <button class="btn-add" data-id="add">Ajouter</button>
+        </div>
+    </aside>
+    <main class="chat-menu">
+        <div class="chat-area">
+            <div class="messages" id="messages">
+                <!--Les messages seront chargés ici -->
             </div>
-        </aside>
-        <main class="chat-menu">
-            <div class="chat-area">
-                <div class="messages" id="messages">
-                   <!--Les messages seront chargés ici -->
-                </div>
-            </div>
-            <footer class="chat-footer">
+        </div>
+        <footer class="chat-footer">
             <div class="chat-input">
                 <button class="attach-btn">📎</button>
                 <div class="chat-container">
@@ -87,11 +111,11 @@
                 </div>
             </div>
         </footer>
-        </main>
+    </main>
 
-    </div>
-    <script src="js/main.js?v=1.0.0"></script>
-    <script src="sw.js"></script>
-    <script src="js/minifyJs.min.js?v=1.0.0"></script>
+</div>
+<script src="js/main.js?v=1.0.0"></script>
+<script src="sw.js?v=1.0.0"></script>
+<script src="js/minifyJs.min.js?v=1.0.0"></script>
 </body>
 </html>
