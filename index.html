@@ -5,14 +5,19 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PWA</title>
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="css/header.css" rel="stylesheet">
-    <link href="css/sidebar.css" rel="stylesheet">
-    <link href="css/search.css" rel="stylesheet">
-    <link href="css/chat.css" rel="stylesheet">
+    <meta name="description" content="StudyConnect - Plateforme d'échange et de collaboration pour étudiants. Partagez vos cours, connectez-vous avec vos amis et étudiez ensemble en ligne.">
+    <title>StudyConnect - Échangeons ensemble</title>
+    <link href="css/styles.css?v=1.0.0" rel="stylesheet">
+    <link href="css/header.css?v=1.0.0" rel="stylesheet">
+    <link href="css/sidebar.css?v=1.0.0" rel="stylesheet">
+    <link href="css/search.css?v=1.0.0" rel="stylesheet">
+    <link href="css/chat.css?v=1.0.0" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 </head>
 <body>
     <div class="container">
@@ -32,24 +37,21 @@
                 </svg>
                 <h1 class="text-color-primary">StudyConnect</h1>
             </div>
-            <p class="text-color-primary">Échangeaons ensemble</p>
+            <p class="text-color-primary">Échangeons ensemble</p>
         </header>
         <header class="header-right">
-            <div class="chat-avatar"></div>
-            <header class="header-right">
-                <div class="chat-head">
-                    <div class="chat-meta">
-                        <h2 id="chat-header">Sélectionne un cours</h2>
-                        <p id="online-count">0 membres en ligne</p>
-                        <p id="user-connect"></p>
-                    </div>
-                    <div class="chat-actions">
+            <div class="chat-avatar">
+                <div class="chat-meta">
+                    <h2 id="chat-header">Sélectionne un cours</h2>
+                    <p id="online-count">0 membres en ligne</p>
+                    <p id="user-connect"></p>
+                </div>
+                <div class="chat-actions">
                     <button class="chat-btn" title="Demander de l'aide">❔</button>
                     <button class="chat-btn" title="Joindre un fichier">📎</button>
                     <button class="chat-btn" title="Appel vidéo">📹</button>
-                    </div>
                 </div>
-        </header>
+            </div>
         </header>
         <aside class="sidebar">
             <form>
@@ -88,8 +90,8 @@
         </main>
 
     </div>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=1.0.0"></script>
     <script src="sw.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/minifyJs.min.js?v=1.0.0"></script>
 </body>
 </html>
