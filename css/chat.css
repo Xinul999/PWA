@@ -1,3 +1,8 @@
+.chat-avatar{
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+}
 .chat-menu {
   grid-area: chat-menu;
   display: flex;
@@ -5,7 +10,9 @@
   height: 100%;
 }
 
-
+.chat-actions{
+  align-self: flex-end;
+}
 .chat-area {
   display: flex;
   flex-direction: column;
