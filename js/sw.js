@@ -4,6 +4,7 @@ const urlsToCache = [
     './index.html',
     './styles.css',
     './main.js',
+    './script.js'
 ]
 
 const skipCdn = url => {

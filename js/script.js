@@ -47,13 +47,13 @@ const UserProfile = {
         StorageData.saveToStorage(UserProfile.USER_KEY.USER, userProfile);
     },
     getCourses: () => {
-        return StorageData.loadFromStorage(UserProfile.USER_KEY.USER).courses;
+        return StorageData.loadFromStorage(UserProfile.USER_KEY.USER).courses || [];
     },
     getFriends: () => {
-        return StorageData.loadFromStorage(UserProfile.USER_KEY.USER).friends;
+        return StorageData.loadFromStorage(UserProfile.USER_KEY.USER).friends || [];
     },
     getChatHistory() {
-        return StorageData.loadFromStorage(UserProfile.USER_KEY.USER).chatHistory;
+        return StorageData.loadFromStorage(UserProfile.USER_KEY.USER).chatHistory || [];
     },
     addCourse: (id, titre, contenu, date) => {
         const courses = [...UserProfile.getCourses()];
@@ -98,11 +98,12 @@ const UserProfile = {
         userProfile.friends = friends;
         StorageData.saveToStorage(UserProfile.USER_KEY.USER, userProfile);
     },
-    addChatHistory: (idChat, idCourse, message, date, side) => {
+    addChatHistory: (idChat, targetId, targetType,message, date, side) => {
         const chatHistory = [...UserProfile.getChatHistory()];
         chatHistory.push({
             id: idChat,
-            idCourse: idCourse,
+            targetId: targetId,        // ID du cours ou de l'ami
+            targetType: targetType,    // 'cours' ou 'amis'
             message: message,
             date: date,
             side: side
@@ -133,7 +134,7 @@ const initializeApp = () => {
     listener(boutonCourse(), boutonAmis(), boutonAdd());
     searchData();
     let user = UserProfile.getUserProfile();
-    if(user === undefined) {
+    if(user === undefined || user === null) {
         const id = gernerarId()
         UserProfile.createUserProfile(id);
     }else{
@@ -243,6 +244,11 @@ const removeListener = () => {
     });
     storeEvent.clear();
 }
+
+const clearAllSelections = () => {
+    allCourses().forEach(course => course.classList.remove('active'));
+    allFriends().forEach(friend => friend.classList.remove('active'));
+};
 const saveCourse = (course) => {
     let h2 = course.querySelector('.editable-title').textContent.trim();
     let p = course.querySelector('.editable-description').textContent.trim();
@@ -250,6 +256,7 @@ const saveCourse = (course) => {
     h2 = h2.length > 0? h2 : 'Nouveau cours';
     p = p.length > 0? p : 'Description';
     let id = gernerarId();
+    course.id = id;
     course.innerHTML = `
                         <div>
                           <h2>${h2}</h2>
@@ -258,8 +265,7 @@ const saveCourse = (course) => {
                               <button class="btn-delete"></button>
                           </div>
                         </div>`;
-    
-    // Ajouter le listener pour le bouton delete
+
     course.querySelector('.btn-delete').addEventListener('click', () => {
         UserProfile.removeCourse(id);
         updateChatHeader(undefined);
@@ -269,22 +275,27 @@ const saveCourse = (course) => {
             course.removeEventListener('click', evt);
             storeEvent.delete(course);
         }
-        
+
         course.remove();
     });
 
-    // Créer et ajouter le listener combiné pour le click
     const combinedClickHandler = () => {
-        const allCourseElements = allCourses();
-        const filtre = allCourseElements.filter((item) => item !== course && item.classList.contains('active'));
-        filtre.forEach((courseItem) => courseItem.classList.remove('active'));
-        course.classList.toggle('active');
-        
-        // Mettre à jour le chat header
+        // Désélectionner TOUT (cours ET amis)
+        clearAllSelections();
+        // Sélectionner ce cours
+        course.classList.add('active');
+
         updateChatHeader(course);
+        loadMessages(course);
+
+        if (window.innerWidth <= 768) {
+            const container = document.querySelector('.container');
+            if (container && !container.classList.contains('mobile-chat-active')) {
+                container.classList.add('mobile-chat-active');
+            }
+        }
     };
 
-    // Stocker et ajouter le listener
     storeEvent.set(course, combinedClickHandler);
     course.addEventListener('click', combinedClickHandler);
 
@@ -296,18 +307,53 @@ const saveFriend = (friend) => {
     const date = new Date().toISOString().split('T')[0];
     h2 = h2.length > 0? h2 : 'Nouvel ami';
     let id = gernerarId();
+    friend.id = id;
     friend.innerHTML = `
-                        <div id="${id}">
+                        <div>
                           <h2>${h2}</h2>
                           <p><small>${date}</small></p>
                           <div class="top-right">
                               <button class="btn-delete"></button>
                           </div>
                         </div>`;
-    removeListener();
-    initListener(allFriends());
-    initListener(allCourses());
-   UserProfile.addFriend(id, h2, date);
+    
+    // Ajouter le listener pour le bouton delete
+    friend.querySelector('.btn-delete').addEventListener('click', () => {
+        UserProfile.removeFriend(id);
+        updateChatHeader(undefined);
+
+        if(storeEvent.has(friend)){
+            const evt = storeEvent.get(friend);
+            friend.removeEventListener('click', evt);
+            storeEvent.delete(friend);
+        }
+        
+        friend.remove();
+    });
+
+    // Créer et ajouter le listener combiné pour le click
+    const combinedClickHandlerFriends = () => {
+        clearAllSelections();
+        friend.classList.toggle('active');
+
+        // Mettre à jour le chat header
+        updateChatHeader(friend);
+        loadMessages(friend);
+
+        // Responsive : activer affichage du chat et masquer la sidebar en mobile
+        if (window.innerWidth <= 768) {
+            const container = document.querySelector('.container');
+            if (container && !container.classList.contains('mobile-chat-active')) {
+                container.classList.add('mobile-chat-active');
+            }
+        }
+    };
+
+    // Stocker et ajouter le listener
+    storeEvent.set(friend, combinedClickHandlerFriends);
+    friend.addEventListener('click', combinedClickHandlerFriends);
+
+    UserProfile.addFriend(id, h2, date);
 }
 const gernerarId = () => {
     return self.crypto.randomUUID();
@@ -316,22 +362,26 @@ const gernerarId = () => {
 const listener = (btnCourse, btnAmis, btnAdd) => {
     const menuCours = document.querySelector('[data-id="cours"]');
     const menuAmis = document.querySelector('[data-id="amis"]');
-    btnCourse.addEventListener('click', (event) => {
+    btnCourse.addEventListener('click', () => {
         if(!btnCourse.classList.contains('active')) {
             btnCourse.classList.toggle('active');
             btnAmis.classList.remove('active');
             menuCours.classList.add('active');
             menuAmis.classList.remove('active');
+            // remove all active class from all friends
+            menuAmis.querySelectorAll('.amis-item').forEach(friend => friend.classList.remove('active'));
         }
 
     });
 
-    btnAmis.addEventListener('click', (event) => {
+    btnAmis.addEventListener('click', () => {
         if(!btnAmis.classList.contains('active')) {
             btnAmis.classList.toggle('active');
             btnCourse.classList.remove('active');
             menuAmis.classList.add('active');
             menuCours.classList.remove('active');
+            // remove all active class from all courses
+            menuCours.querySelectorAll('.cours-item').forEach(course => course.classList.remove('active'));
         }
     });
 
@@ -392,14 +442,21 @@ const displayCourses = () => {
         });
 
         const combinedClickHandler = () => {
-            const allCourseElements = allCourses();
-            const filtre = allCourseElements.filter((item) => item !== courseElement && item.classList.contains('active'));
-            filtre.forEach((course) => course.classList.remove('active'));
+            clearAllSelections();
             courseElement.classList.toggle('active');
             
             // Mettre à jour le chat header
             updateChatHeader(courseElement);
-            loadMessages(courseElement)
+            loadMessages(courseElement);
+
+           // Responsive : activer affichage du chat et masquer la sidebar en mobile
+            if (window.innerWidth <= 768) {
+                const container = document.querySelector('.container');
+                if (container && !container.classList.contains('mobile-chat-active')) {
+                    container.classList.add('mobile-chat-active');
+                }
+            }
+
         };
 
         // Stocker et ajouter le listener
@@ -415,6 +472,7 @@ const displayFriends = () => {
         const friendElement = document.createElement('div');
         friendElement.classList.add('amis-item');
         friendElement.dataset.id = 'amis-item';
+        friendElement.id = friend.id;
         friendElement.innerHTML = `
             <div>
                 <h2>${friend.username}</h2>
@@ -427,16 +485,30 @@ const displayFriends = () => {
 
         friendElement.querySelector('.btn-delete').addEventListener('click', () => {
             UserProfile.removeFriend(friend.id);
+            updateChatHeader(undefined);
+
+            if(storeEvent.has(friendElement)){
+                const evt = storeEvent.get(friendElement);
+                friendElement.removeEventListener('click', evt);
+                storeEvent.delete(friendElement);
+            }
+
             friendElement.remove();
         });
 
         const combinedClickHandlerFriends = () => {
-            const filtre = allFriends().filter((item) => item !== friendElement && item.classList.contains('active'));
-            filtre.forEach((course) => course.classList.remove('active'));
+            clearAllSelections();
             friendElement.classList.toggle('active');
-
-            // Mettre à jour le chat header
             updateChatHeader(friendElement);
+            loadMessages(friendElement);
+
+            // Responsive : activer affichage du chat et masquer la sidebar en mobile
+            if (window.innerWidth <= 768) {
+                const container = document.querySelector('.container');
+                if (container && !container.classList.contains('mobile-chat-active')) {
+                    container.classList.add('mobile-chat-active');
+                }
+            }
         };
 
         // Stocker et ajouter le listener
@@ -447,29 +519,37 @@ const displayFriends = () => {
 }
 
 /*Intégration code de chat*/
-const updateChatHeader = (course) => {
-    const courseName = document.getElementById('chat-header');
-    if(course === undefined){
-        courseName.textContent = 'Selection un cours';
+const updateChatHeader = (item) => {
+    const itemName = document.getElementById('chat-header');
+    if(item === undefined){
+        itemName.textContent = 'Selection un cours';
         document.getElementById('messages').innerHTML = '';
         return;
     }
-    if(document.querySelector('[data-id="cours"]').classList.contains('active')){
-        const title = course.querySelector('h2').textContent;
-        courseName.textContent = (title) ? title : 'Cours inconnu';
-        loadMessages(courseName);
+    if(document.querySelector('[data-id="cours"]').classList.contains('active') ||
+    document.querySelector('[data-id="amis"]').classList.contains('active')){
+        const title = item.querySelector('h2').textContent;
+        itemName.textContent = (title) ? title : 'Cours inconnu';
+        loadMessages(item);
     }
 
 
 }
 
 /*chargement du chat*/
-const loadMessages = (courseName) => {
+const loadMessages = (activeItem) => {
     const container = document.getElementById('messages');
     container.innerHTML = '';
 
-    const stored = courseName.id;
-    const messages = UserProfile.getChatHistory().filter(chatHistory => chatHistory.idCourse === stored);
+    const targetId = activeItem.id;
+
+    // Déterminer le type basé sur la classe de l'élément
+    const targetType = activeItem.classList.contains('cours-item') ? 'cours' : 'amis';
+
+    const allHistory = UserProfile.getChatHistory();
+    const messages = allHistory.filter(chatHistory =>
+        chatHistory.targetId === targetId && chatHistory.targetType === targetType
+    );
 
     messages.forEach(msg => {
         const div = document.createElement('div');
@@ -477,26 +557,40 @@ const loadMessages = (courseName) => {
         div.textContent = msg.message;
         container.appendChild(div);
     });
-}
+};
 
 const sendMessage = () => {
     const input = document.getElementById("msgInput");
     const msg = input.value.trim();
     if (!msg) return;
 
-    const courseName = document.querySelector('[data-id="cours-item"].active');
-    const isCourse = document.getElementById("cours").classList.contains("active") && courseName && courseName.classList.contains("active");
-    if (!isCourse) return;
+    const activeItem = document.querySelector('[data-id="cours-item"].active, [data-id="amis-item"].active');
 
-    // Affiche visuellement
+    if (!activeItem) {
+        console.warn('Aucun cours ou ami sélectionné');
+        return;
+    }
+
+    const targetType = activeItem.classList.contains('cours-item') ? 'cours' : 'amis';
+
     const div = document.createElement('div');
     div.className = 'message sent';
     div.textContent = msg;
     document.getElementById('messages').appendChild(div);
 
-    // Stocke dans localStorage
     const date = new Date().toISOString();
-    UserProfile.addChatHistory(gernerarId(), courseName.id, msg, date,'right');
+    UserProfile.addChatHistory(gernerarId(), activeItem.id, targetType, msg, date, 'right');
+
     input.value = '';
-    loadMessages(courseName);
+    loadMessages(activeItem);
+}
+
+const headerLeft = document.querySelector('.header-left');
+
+if (headerLeft) {
+  headerLeft.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      document.querySelector('.container')?.classList.remove('mobile-chat-active');
+    }
+  });
 }
