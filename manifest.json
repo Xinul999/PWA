@@ -1,12 +1,19 @@
 {
-  "name": "Application PWA pour etudiant",
-  "short_name": "PWA student",
+  "id": "/",
+  "name": "StudyConnect",
+  "short_name": "StudyConnect",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#007bff",
-  "description": "Web Application de communication",
+  "theme_color": "#000000",
+  "description": "Plateforme d'échange et de collaboration pour étudiants",
   "icons": [
+    {
+      "src": "ico/icon-48-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
     {
       "src": "ico/icon-72-72.png",
       "sizes": "72x72",
@@ -31,6 +38,21 @@
       "src": "ico/icon-512-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "img/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "img/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
     }
   ],
   "categories": ["productivity", "utilities"],
@@ -48,10 +70,17 @@
       "form_factor": "narrow"
     }
   ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
   "cache_policy": {
     "default": "cache-first",
     "images": "cache-first",
     "documents": "network-first"
-  }
-
+  },
+  "dir": "ltr",
+  "lang": "fr",
+  "scope": "/",
+  "scope_extensions": [],
+  "prefer_related_applications": true
 }
