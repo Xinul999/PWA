@@ -74,7 +74,7 @@ self.addEventListener('fetch', (e) => {
     // stratégie de network first with cache fallback
     e.respondWith(
        fetch(e.request).then(response => {
-           console.log('Url recupéré sur le reseau : ', e.request.url, response);
+          // console.log('Url recupéré sur le reseau : ', e.request.url, response);
            caches.open('cache-apps').then(cache => cache.put(e.request, response));
            return response.clone();
        }).catch(error => {

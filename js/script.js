@@ -596,7 +596,7 @@ const sendMessage = () => {
                 if (permission === 'granted') {
                     new Notification('Nouveau message reçu', {
                         body: reply,
-                        icon: '../icons/icon-72-72.png'
+                        icon: '../ico/icon-72-72.png'
                     });
                 }
             });

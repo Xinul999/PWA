@@ -17,7 +17,7 @@ if(window.Notification && window.Notification !== 'denied'){
         if(permission === 'granted'){
             const options = {
                 body: 'Cette notification est une preuve que le service worker est fonctionnel',
-                icon: 'icons/icon-72-72.png'
+                icon: 'ico/icon-72-72.png'
             };
             const notification = new Notification('Notification autorisée', options);
         }else{
