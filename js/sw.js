@@ -2,14 +2,26 @@ console.log('Service worker registered!');
 const CACHE_NAME = 'cache-apps';
 const urlsToCache = [
     './index.html',
-    './styles.css',
-    './main.js',
-    './script.js'
+    './css/styles.css',
+    './css/header.css',
+    './css/sidebar.css',
+    './css/search.css',
+    './css/chat.css',
+    './js/main.js',
+    './js/script.js',
+    './manifest.json'
 ]
 
 const skipCdn = url => {
-    const urlTest = new URL(url);
-    return !!(urlTest.hostname.match("cdn") || urlTest.origin !== location.origin);
+    try {
+        const urlTest = new URL(url);
+        return !!(urlTest.hostname.includes("cdn") ||
+            urlTest.origin !== self.location.origin ||
+            url.includes('contentScript.js') ||
+            url.includes('chrome-extension'));
+    } catch (e) {
+        return true;
+    }
 }
 self.addEventListener('install', (e) => {
    console.log('Service worker installed!');
