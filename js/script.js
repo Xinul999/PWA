@@ -583,6 +583,25 @@ const sendMessage = () => {
 
     input.value = '';
     loadMessages(activeItem);
+
+    setTimeout(() => {
+        const reply = `Réponse automatique à: "${msg}"`; // <-- personnalisez selon besoin
+        const replyDate = new Date().toISOString();
+        UserProfile.addChatHistory(gernerarId(), activeItem.id, targetType, reply, replyDate, 'left');
+
+        loadMessages(activeItem);
+
+        if (window.Notification && Notification.permission !== 'denied') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    new Notification('Nouveau message reçu', {
+                        body: reply,
+                        icon: '../icons/icon-72-72.png'
+                    });
+                }
+            });
+        }
+    }, 10000);
 }
 
 const headerLeft = document.querySelector('.header-left');
