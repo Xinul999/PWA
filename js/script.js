@@ -585,7 +585,9 @@ const sendMessage = () => {
     loadMessages(activeItem);
 
     setTimeout(() => {
-        const reply = `Réponse automatique à: "${msg}"`; // <-- personnalisez selon besoin
+        console.log('Réponse automatique après 10 secondes');
+        console.log(activeItem);
+        const reply = `Réponse automatique à: "${msg}"`; 
         const replyDate = new Date().toISOString();
         UserProfile.addChatHistory(gernerarId(), activeItem.id, targetType, reply, replyDate, 'left');
 
