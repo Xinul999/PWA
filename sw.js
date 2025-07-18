@@ -1,17 +1,18 @@
 const CACHE_NAME = 'cache-apps';
+
+
+
 const urlsToCache = [
     '/index.html',
-    '/css/styles.css',
-    '/css/header.css',
-    '/css/sidebar.css',
-    '/css/search.css',
-    '/css/chat.css',
-    '/js/main.js',
-    '/js/minifyJs.min.js',
-    '/manifest.json'
+    '/css/styles.css?v=1.0.1',
+    '/css/header.css?v=1.0.1',
+    '/css/sidebar.css?v=1.0.1',
+    '/css/search.css?v=1.0.1',
+    '/css/chat.css?v=1.0.1',
+    '/js/main.js?v=1.0.1',
+    '/js/minifyJs.min.js?v=1.0.1',
+    '/manifest.json?v=1.0.1'
 ]
-
-
 const skipCdn = url => {
     try {
         const urlTest = new URL(url);
@@ -24,21 +25,23 @@ const skipCdn = url => {
     }
 }
 
-
 self.addEventListener('install', (e) => {
     console.log('Service worker installed!');
     const promiseCache = caches.open(CACHE_NAME).then((cache) => {
         return cache.addAll(urlsToCache);
-    });
+    })
     e.waitUntil(promiseCache);
 });
+
+
+
 
 
 self.addEventListener('activate', (e) => {
     console.log('Service worker activated!');
     const oldCache = caches.keys().then(keys => {
         keys.forEach(key => {
-            if (key !== CACHE_NAME) {
+            if (key!== CACHE_NAME) {
                 return caches.delete(key);
             }
         });
@@ -47,12 +50,15 @@ self.addEventListener('activate', (e) => {
 });
 
 
+
+
+
 self.addEventListener('fetch', (e) => {
-    if (skipCdn(e.request.url)) {
+    if(skipCdn(e.request.url)){
         console.log('Ignoring request to CDN : ', e.request.url);
         return;
     }
-    // stratégie de network first with cache fallback
+
     e.respondWith(
         fetch(e.request).then(response => {
             console.log('Url recupéré sur le reseau : ', e.request.url, response);
@@ -60,13 +66,13 @@ self.addEventListener('fetch', (e) => {
             return response.clone();
         }).catch(error => {
             console.log('Erreur lors de la récupération de données on recupère depuis le cache: ', error);
-            return caches.match(e.request);
+            return  caches.match(e.request);
         })
     );
 });
 
 
-self.addEventListener('push', (e) => {
+self.addEventListener('push', (e)=> {
     console.log('Push notification received!');
 });
 
